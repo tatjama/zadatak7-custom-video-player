@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Video Player</title>
+    <link rel="stylesheet" type="text/css" href="./styles/style.css"></link>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -13,17 +17,24 @@
             <source src="./videos/clip1.mp4" type="video/mp4">
             <source src="./videos/clip1.webm" type="video/webm">
             Your browser does not support the video tag.
-          </video>
-          <div class="controls">              
-              <input type="range" min="0" max="100" value="20">
-              <button class="play">Play/Pause</button>
-              <button class="sound">sound</button>
-              <button class="back">Back</button>
-              <button class="forward">Forward</button>
-              <button class="speed">Speed</button>
-              <span class="time-start">00:00 </span>/
-              <span class="time-end">02:00</span>              
-              <button class="screen">View</button>
+        </video>
+        <div class="controls">
+            <div class="time-control">
+                <span class="time-start">00:00</span>
+                <input type="range" min="0" max="100" value="20">
+                <span class="time-end">02:07</span>
+            </div>
+            <div class="play-control">
+                <button class="play">Play/Pause</button>
+                <button class="sound">sound</button>
+                <button class="back">Back</button>
+                <button class="forward">Forward</button>
+                <button class="speed">Speed</button>
+                <span class="time-start">00:00 </span>/
+                <span class="time-end">02:00</span>              
+                <button class="screen">View</button>
+            </div>
+            
           </div>
     </div>
 </body>
