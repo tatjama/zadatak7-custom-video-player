@@ -7,6 +7,24 @@
     <title>Custom Video Player</title>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>Video Player</h1>
+        <video class="video">
+            <source src="./videos/clip1.mp4" type="video/mp4">
+            <source src="./videos/clip1.webm" type="video/webm">
+            Your browser does not support the video tag.
+          </video>
+          <div class="controls">              
+              <input type="range" min="0" max="100" value="20">
+              <button class="play">Play/Pause</button>
+              <button class="sound">sound</button>
+              <button class="back">Back</button>
+              <button class="forward">Forward</button>
+              <button class="speed">Speed</button>
+              <span class="time-start">00:00 </span>/
+              <span class="time-end">02:00</span>              
+              <button class="screen">View</button>
+          </div>
+    </div>
 </body>
 </html>
