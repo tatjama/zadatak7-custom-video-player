@@ -18,24 +18,42 @@
             <source src="./videos/clip1.webm" type="video/webm">
             Your browser does not support the video tag.
         </video>
+        
         <div class="controls">
             <div class="time-control">
                 <span class="time-start">00:00</span>
-                <input type="range" min="0" max="100" value="20">
+                <input class="time-range" type="range" min="0" max="100" value="0" name="time">
                 <span class="time-end">02:07</span>
             </div>
-            <div class="play-control">
-                <button class="play">Play/Pause</button>
-                <button class="sound">sound</button>
-                <button class="back">Back</button>
-                <button class="forward">Forward</button>
-                <button class="speed">Speed</button>
-                <span class="time-start">00:00 </span>/
-                <span class="time-end">02:00</span>              
-                <button class="screen">View</button>
-            </div>
-            
-          </div>
+            <div class="play-controls">
+                <div class="play-item">
+                    <button class="play-pause">Play/Pause</button>
+                    <div class="volume">
+                        <button class="volume-btn">sound</button>
+                        <input class="volume-slider" type="range" min="0" max="100" value="60" name="volume">
+                    </div>
+                    <button class="back">Back</button>
+                    <button class="forward">Forward</button>
+                </div>                
+                <div class="play-item">                    
+                    <button class="speed-btn">1 x Speed</button>
+                    <span class="time-start">00:00 </span>/
+                    <span class="time-end">02:00</span>              
+                    <button class="screen">View</button>
+                </div>
+            </div>            
+        </div>
+        <ul class="speed-list">
+            <li>0.25</li>
+            <li>0.5</li>
+            <li>0.75</li>
+            <li>1</li>
+            <li>1.25</li>
+            <li>1.5</li>
+            <li>1.75</li>
+            <li>2</li>
+        </ul>
     </div>
+    <script type="text/javascript" src="./js/video.js"></script>
 </body>
 </html>
