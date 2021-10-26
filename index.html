@@ -9,21 +9,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     <div class="container">
         <h1>Video Player</h1>
-        <video class="video">
+        <video class="video" >
             <source src="./videos/clip1.mp4" type="video/mp4">
             <source src="./videos/clip1.webm" type="video/webm">
             Your browser does not support the video tag.
         </video>
-        
         <div class="controls">
             <div class="time-control">
-                <span class="time-start">00:00</span>
-                <input class="time-range" type="range" min="0" max="100" value="0" name="time">
-                <span class="time-end">02:07</span>
             </div>
             <div class="play-controls">
                 <div class="play-item">
@@ -32,27 +29,28 @@
                         <button class="volume-btn">sound</button>
                         <input class="volume-slider" type="range" min="0" max="100" value="60" name="volume">
                     </div>
-                    <button class="back">Back</button>
-                    <button class="forward">Forward</button>
                 </div>                
-                <div class="play-item">                    
-                    <button class="speed-btn">1 x Speed</button>
-                    <span class="time-start">00:00 </span>/
-                    <span class="time-end">02:00</span>              
+                <div class="play-item">  
+                    <div class="speed">
+                        <ul class="speed-list">
+                        <li>0.25</li>
+                        <li>0.5</li>
+                        <li>0.75</li>
+                        <li>1</li>
+                        <li>1.25</li>
+                        <li>1.5</li>
+                        <li>1.75</li>
+                        <li>2</li>
+                    </ul>                  
+                    <button class="speed-btn"> x 1</button>     
+                    
+                    </div>
                     <button class="screen">View</button>
                 </div>
             </div>            
         </div>
-        <ul class="speed-list">
-            <li>0.25</li>
-            <li>0.5</li>
-            <li>0.75</li>
-            <li>1</li>
-            <li>1.25</li>
-            <li>1.5</li>
-            <li>1.75</li>
-            <li>2</li>
-        </ul>
+
+       
     </div>
     <script type="text/javascript" src="./js/video.js"></script>
 </body>
