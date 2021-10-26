@@ -8,7 +8,7 @@ const videoSpeedBtn = document.querySelector(".speed-btn");
 const volumeBtn = document.querySelector(".volume-btn");
 const volumeSlider = document.querySelector(".volume-slider");
 
-class Player{
+class MyVideo{
     constructor(video,  volume, time, speed){
         this.video = video;
         this.volume = volume;
@@ -16,27 +16,9 @@ class Player{
         this.speed = speed;
     }  
     
-    playPause = () => this.video.paused? this.video.play(): this.video.pause(); 
-
-    setVolume = (value, volume) => {
-       volumeSlider.value = value;
-        this.video.volume = volume;
-        console.log(this.speed)
-    }
-
-    toggleVolume =  () => (volumeSlider.value !== "0")? this.setVolume("0", 0): this.setVolume("100", 1);
-    
-    changeVolume = () => this.video.volume = volumeSlider.value / 100;    
-
-    selectSpeed(e){
-        this.speed = e.target.firstChild.data*1;        
-        this.video.playbackRate = this.speed;        
-        speeds.forEach(el=> el.style.backgroundImage = "none");
-        e.target.style.backgroundImage = "url(./images/icon-check.svg)";
-        videoSpeedBtn.innerHTML = " x " + this.speed;
-    }
+    playPause = () => this.video.paused? this.video.play(): this.video.pause();    
 }
-class UI{
+class MyPlayer{
     constructor(player){
         this.player = player;
     }
@@ -59,7 +41,22 @@ class UI{
         + trackValue + '%, grey ' + trackValue + '%, grey 100%)'
     };
 
-   }
+    selectSpeed(e){
+        this.player.speed = e.target.firstChild.data*1;        
+        this.player.video.playbackRate = this.player.speed;        
+        speeds.forEach(el=> el.style.backgroundImage = "none");
+        e.target.style.backgroundImage = "url(./images/icon-check.svg)";
+        videoSpeedBtn.innerHTML = " x " + this.player.speed;
+    }
+
+    setVolume = (value, volume) => {
+        volumeSlider.value = value;
+         this.player.video.volume = volume;
+     }
+    toggleVolume =  () => (volumeSlider.value !== "0")? this.setVolume("0", 0): this.setVolume("100", 1);
+    changeVolume = () => this.player.video.volume = volumeSlider.value / 100;    
+
+}
 
 class Utility{
     static displayFullScreen = () => container.classList.add("full");
@@ -69,34 +66,28 @@ class Utility{
 }
 
 videoPlayer.addEventListener("loadedmetadata",() => {
-    const myPlayer = new Player(videoPlayer,  0.5, 0, 1);
-    const ui = new UI(myPlayer);
-    ui.displayPlayer();    
+    const myVideo = new MyVideo(videoPlayer,  0.1, 0, 1);
+    const myPlayer = new MyPlayer(myVideo);
+    myPlayer.displayPlayer();    
 
     const timeStart = document.querySelector(".time-start");
     const timeInputRange = document.querySelector(".time-range");
 
-    myPlayer.video.addEventListener("click",() => {
-        myPlayer.playPause()
-    } );    
+    myVideo.video.addEventListener("click",() =>  myVideo.playPause());    
+    playPauseBtn.addEventListener("click",() => myVideo.playPause());
     
-    playPauseBtn.addEventListener("click",() => myPlayer.playPause());
-    
-    myPlayer.video.ontimeupdate = (e) => {
-        timeStart.innerHTML =  ui.calculateTime(e.target.currentTime);
-        ui.updateSliderPosition(timeInputRange, e.target.currentTime);
+    myVideo.video.ontimeupdate = (e) => {
+        timeStart.innerHTML =  myPlayer.calculateTime(e.target.currentTime);
+        myPlayer.updateSliderPosition(timeInputRange, e.target.currentTime);
     }
-
-    timeInputRange.onchange = () => myPlayer.video.currentTime = timeInputRange.value * myPlayer.video.duration/ 100;
+    timeInputRange.onchange = () => myVideo.video.currentTime = timeInputRange.value * myVideo.video.duration/ 100;
        
     volumeBtn.addEventListener("click", myPlayer.toggleVolume);
-
     volumeSlider.addEventListener("input", myPlayer.changeVolume);
 
     speeds.forEach(el => el.addEventListener("click",(e) => myPlayer.selectSpeed(e)));
 
 })
-
 
     viewScreenBtn.addEventListener("click", Utility.displayFullScreen);
     document.addEventListener("keydown", Utility.escapeFullScreen);  
