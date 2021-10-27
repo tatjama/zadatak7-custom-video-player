@@ -64,7 +64,7 @@ The Video Player should look and work like this:
 ### Links
 
 - Solution URL: [GitHub](https://github.com/tatjama/zadatak7-custom-video-player/tree/develop)
-- Preview: [Vercel](https://zadatak7-custom-video-player-d7igfwxua-tatjana.vercel.app/)
+- Preview: [Vercel](https://zadatak7-custom-video-player-f6p4t3vkk-tatjana.vercel.app/)
 - Live Site URL: [Vercel](https://zadatak7-custom-video-player.vercel.app/)
 
 ## My process
