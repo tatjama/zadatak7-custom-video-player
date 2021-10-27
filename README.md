@@ -10,67 +10,80 @@
   - [Author](#author)
 
 ## Overview
-![Overview](./images/screenshots/slider.jpg)
+![Overview](./images/screenshots/player.jpg)
 
-- On first load
-  1. Show Initial Values 100K pageviews / $16 per month
+- On first load and on Ended
+  1. On screen displayed Play button is shown for 1 second.
+  2. Active buttons: Play, sound On, wide screen, speed x 1 (normal)
 
-- App behavior
-  By positioning the slider, the user gets a monthly price depending on the page views. For annual subscription, discount is 25%
-Here are the different page view ranges and the corresponding monthly price totals:
+- App controls
+  1. Play - Pressing Play button or Pressing Screen.
+  2. Stop - Pressing Stop button or Pressing Screen.
+  3. Sound - Toggle Sound button   between muted and full sound,
+           - Hover Sound button -> show Sound slider to change volume
+  4. Speed - Toggle Speed button between show and hide speed list,
+           - Chosen Speed -> show on Speed button,
+  5. Screen - Toggle Screen button between full screen and normal,
+            - Full screen -> Show message
+            - Esc key -> close full screen,
+  6. Duration - Progress bar show progress of the video, duration and elapsed time ,
+              - User can "jump" on the desire moment of the video by moving slider left or right,
 
-- 10K pageviews / $8 per month
-- 50K pageviews / $12 per month
-- 100K pageviews / $16 per month
-- 500k pageviews / $24 per month
-- 1M pageviews / $36 per month
 
-If the visitor switches the toggle to yearly billing, a 25% discount should be applied to all prices.
 ## The challenge
 
-Your challenge is to build out this interactive pricing component and get it looking as close to the design as possible.
+You need to make a Custom Video Player; visual design (colors, fonts, etc.) is free to choose, it is only important to be responsive.
 
-Your users should be able to:
+The videos you can use are in the following archive: 
+![Videos](https://drive.google.com/file/d/19tmFoS7OOt5eb7n5s1T_mSe6v49etyM2/view?usp=sharing)
 
-- View the optimal layout for the app depending on their device's screen size
-- See hover states for all interactive elements on the page
-- Use the slider and toggle to see prices for different page view numbers (details provided below)
+Use only Browser Video & Audio API and make custom controls:
+- Yes the video can be played / paused
+- To be able to increase the volume
+- That sound can be mutated
+- That the video playback speed can be changed (default is 1.0x, and there should be 0.5x, 0.75x, 1.5x, 2.0x)
+- To have FullScreen mode
+- Create a progress bar for the time (duration of the video) that can be clicked and that takes the user to the exact second of the video.
+
+The Video Player should look and work like this: 
+![Example](https://drive.google.com/file/d/1zGt-IHlrBeRHJpBuOuGE2AIAjU1OJTta/view?usp=sharing)
 
 ### Screenshot
 
-![Desktop-init ](./images/screenshots/desktop-init.png)
-![Desktop-Active ](./images/screenshots/desktop-active.png)
-![Desktop-max ](./images/screenshots/desktop-max.png)
-![Desktop-min ](./images/screenshots/desktop-min.png)
-![Tablet-768 ](./images/screenshots/tablet.png)
-![Tablet-landscape ](./images/screenshots/tablet-ls.png)
+![Desktop-init ](./images/screenshots/dt-start.png)
+![Desktop-Active ](./images/screenshots/dt-active.png)
+![Desktop-Active ](./images/screenshots/dt-active1.png)
+![Desktop-max ](./images/screenshots/dt-fullscreen.png)
+![Tablet-768 ](./images/screenshots/tablet-fullscreen.png)
+![Tablet-landscape ](./images/screenshots/tablet-landscape.png)
 ![Mobile-375 ](./images/screenshots/mobile.png)
+![Mobile-fullscreen ](./images/screenshots/mobile-fullscreen.png)
 ![Mobile-landscape ](./images/screenshots/mobile-landscape.png)
+![Mobile-landscape-fullscreen ](./images/screenshots/mobile-landscape-fullscreen.png)
 
 ### Links
 
-- Solution URL: [GitHub](https://github.com/tatjama/bonus-zadatak6-slider-component/tree/develop)
-- Preview: [Vercel](https://bonus-zadatak6-slider-component-20rsxdh32-tatjana.vercel.app/)
-- Live Site URL: [Vercel](https://bonus-zadatak6-slider-component.vercel.app/)
+- Solution URL: [GitHub](https://github.com/tatjama/zadatak7-custom-video-player/tree/develop)
+- Preview: [Vercel](https://zadatak7-custom-video-player-f6p4t3vkk-tatjana.vercel.app/)
+- Live Site URL: [Vercel](https://zadatak7-custom-video-player.vercel.app/)
 
 ## My process
 
 1. Create a new project
-2. Import starting code
-3. Initializing git repositories main and develop
-4. Import git repositories to the Vercel project
-5. Create HTML structure
-6. Create CSS Utility
+2. Initializing git repositories main and develop
+3. Import git repositories to the Vercel project
+4. Create HTML structure
+5. Create CSS Utility
+6. Create JavaScript Custom Video Player
 7. Style for Desktop
 8. Responsive Mobile
-9. Create JavaScript Behavior for Pages
-11. Manual Test for bugs
-14. Compare original designs with my work
-15. Create screenshots
-16. Change README-template.md to README.md
-17. Open Pull request
-18. Solve Issue
-19. Merge develop branch into master branch
+9. Manual Test for bugs
+10. Compare original designs with my work
+11. Create screenshots
+12. Change README-template.md to README.md
+13. Open Pull request
+14. Solve Issue
+15. Merge develop branch into master branch
 ### Built with
 
 1. Semantic HTML5 markup
@@ -86,6 +99,7 @@ Your users should be able to:
 3. JavaScript
 - DOM manipulation   
 - Event handling
+- Browse Audio && Video API
 ## Author
 
 - Website - [Tatjana Markovic](https://my-react-portfolio-tatjana.vercel.app/)
