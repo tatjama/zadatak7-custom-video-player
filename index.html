@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Video Player</h1>
+        <!--<h1>Video Player</h1>-->
         <video class="video" >
             <source src="./videos/clip1.mp4" type="video/mp4">
             <source src="./videos/clip1.webm" type="video/webm">
@@ -24,12 +24,12 @@
             </div>
             <div class="play-controls">
                 <div class="play-item">
-                    <button class="play-pause">Play/Pause</button>
+                    <button class="play-pause"></button>
                     <div class="volume">
-                        <button class="volume-btn">sound</button>
+                        <button class="volume-btn"></button>
                         <input class="volume-slider" type="range" min="0" max="100" value="60" name="volume">
                     </div>
-                </div>                
+                </div>          
                 <div class="play-item">  
                     <div class="speed">
                         <ul class="speed-list">
@@ -45,11 +45,13 @@
                     <button class="speed-btn"> x 1</button>     
                     
                     </div>
-                    <button class="screen">View</button>
+                    <button class="screen"></button>
                 </div>
             </div>            
         </div>
-
+        <div class="message-container">
+           <p class="message"> Press <span> Esc </span> &nbsp to exit full screen</p>
+        </div>
        
     </div>
     <script type="text/javascript" src="./js/video.js"></script>

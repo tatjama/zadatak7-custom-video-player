@@ -16,18 +16,27 @@ class MyVideo{
         this.speed = speed;
     }  
     
-    playPause = () => this.video.paused? this.video.play(): this.video.pause();    
+    playPause = () => {
+        if(this.video.paused){
+            console.log(this.video.volume)
+            this.video.play();
+            playPauseBtn.classList.add("active");
+        }else{
+            this.video.pause();
+            playPauseBtn.classList.remove("active");
+        } 
+    }  
 }
 class MyPlayer{
-    constructor(player){
-        this.player = player;
+    constructor(myVideo){
+        this.myVideo = myVideo;
     }
 
     displayPlayer(){
         document.querySelector(".time-control").innerHTML = `        
-            <span class="time-start">${this.calculateTime(this.player.time)}</span>
+            <span class="time-start">${this.calculateTime(this.myVideo.time)}</span>
             <input class="time-range" type="range" min="0" max="100" value="0" name="time">
-            <span class="time-end">${this.calculateTime(this.player.video.duration)}</span>        
+            <span class="time-end">${this.calculateTime(this.myVideo.video.duration)}</span>        
         `        
     }
 
@@ -35,38 +44,64 @@ class MyPlayer{
         return   Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2);
     }
 
-    updateSliderPosition = (element, value ) => {
-        let trackValue = (value)/(this.player.video.duration)*100;
+    updateSliderDisplay = (element, value)=>{
         element.style.background = 'linear-gradient(to right, red 0%, red ' 
-        + trackValue + '%, grey ' + trackValue + '%, grey 100%)'
+        + value + '%, grey ' + value + '%, grey 100%)'
+    }
+
+    updateSliderPosition = (element, value ) => {
+        let trackValue = (value)/(this.myVideo.video.duration)*100;
+        this.updateSliderDisplay(element, trackValue);
     };
 
     selectSpeed(e){
-        this.player.speed = e.target.firstChild.data*1;        
-        this.player.video.playbackRate = this.player.speed;        
+        this.myVideo.speed = e.target.firstChild.data*1;        
+        this.myVideo.video.playbackRate = this.myVideo.speed;        
         speeds.forEach(el=> el.style.backgroundImage = "none");
         e.target.style.backgroundImage = "url(./images/icon-check.svg)";
-        videoSpeedBtn.innerHTML = " x " + this.player.speed;
+        videoSpeedBtn.innerHTML = " x " + this.myVideo.speed;
     }
 
     setVolume = (value, volume) => {
+        volumeBtn.classList.contains("active")? volumeBtn.classList.remove("active"):volumeBtn.classList.add("active");
         volumeSlider.value = value;
-         this.player.video.volume = volume;
+        this.updateSliderDisplay(volumeSlider, value);
+        this.myVideo.video.volume = volume;
+
      }
-    toggleVolume =  () => (volumeSlider.value !== "0")? this.setVolume("0", 0): this.setVolume("100", 1);
-    changeVolume = () => this.player.video.volume = volumeSlider.value / 100;    
+    toggleVolume =  () => (volumeSlider.value != "0")? this.setVolume("0", 0): this.setVolume("100", 1);
+    changeVolume = () => {
+        this.myVideo.video.volume = volumeSlider.value / 100;
+        volumeSlider.value !== 0 && volumeBtn.classList.contains("active")&& volumeBtn.classList.remove("active");
+        volumeSlider.value == 0 && !volumeBtn.classList.contains("active")&& volumeBtn.classList.add("active");
+        this.updateSliderDisplay(volumeSlider, volumeSlider.value);
+    }    
 
 }
 
 class Utility{
-    static displayFullScreen = () => container.classList.add("full");
-    static escapeFullScreen = (e) => (e.key === "Escape") && container.classList.remove("full");
+    static toggleFullScreen = () => {
+        if(container.classList.contains("full")){
+            container.classList.remove("full");
+            viewScreenBtn.classList.remove("active");
+        }else{
+            container.classList.add("full");
+            viewScreenBtn.classList.add("active");
+            document.querySelector(".message-container").style.display = "block";
+            setTimeout(function(){document.querySelector(".message-container").style.display = "none"}, 3000);
+        }        
+    }
+    static escapeFullScreen = (e) => {
+        if(e.key === "Escape"){
+        container.classList.remove("full");
+        viewScreenBtn.classList.remove("active");
+    } }
     static toggleSpeedList = () =>  videoSpeedList.style.display =  (videoSpeedList.style.display !== "block") ? "block": "none";
     static closeSpeedList = (e) => videoSpeedList.style.display = (e.target !==videoSpeedBtn )&& "none";
 }
 
 videoPlayer.addEventListener("loadedmetadata",() => {
-    const myVideo = new MyVideo(videoPlayer,  0.1, 0, 1);
+    const myVideo = new MyVideo(videoPlayer,  0.5, 0, 1);
     const myPlayer = new MyPlayer(myVideo);
     myPlayer.displayPlayer();    
 
@@ -80,6 +115,16 @@ videoPlayer.addEventListener("loadedmetadata",() => {
         timeStart.innerHTML =  myPlayer.calculateTime(e.target.currentTime);
         myPlayer.updateSliderPosition(timeInputRange, e.target.currentTime);
     }
+
+    myVideo.video.onended = () => {
+        myPlayer.updateSliderPosition(timeInputRange, 0);
+        timeStart.innerHTML = myPlayer.calculateTime(0);
+        playPauseBtn.classList.contains("active") && playPauseBtn.classList.remove("active");
+        myVideo.video.volume = 0.3;  
+        volumeBtn.classList.contains("active")&&volumeBtn.classList.remove("active");
+        myVideo.video.playbackRate = 1;
+        videoSpeedBtn.innerHTML = "x 1";
+    }
     timeInputRange.onchange = () => myVideo.video.currentTime = timeInputRange.value * myVideo.video.duration/ 100;
        
     volumeBtn.addEventListener("click", myPlayer.toggleVolume);
@@ -89,7 +134,7 @@ videoPlayer.addEventListener("loadedmetadata",() => {
 
 })
 
-    viewScreenBtn.addEventListener("click", Utility.displayFullScreen);
+    viewScreenBtn.addEventListener("click", Utility.toggleFullScreen);
     document.addEventListener("keydown", Utility.escapeFullScreen);  
     videoSpeedBtn.addEventListener("click", Utility.toggleSpeedList);    
     document.addEventListener("click", Utility.closeSpeedList);
