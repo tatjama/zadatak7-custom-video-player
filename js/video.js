@@ -7,6 +7,8 @@ const videoSpeedList = document.querySelector(".speed-list");
 const videoSpeedBtn = document.querySelector(".speed-btn");
 const volumeBtn = document.querySelector(".volume-btn");
 const volumeSlider = document.querySelector(".volume-slider");
+const messageContainer = document.querySelector(".message-container");
+const playScreenBtn = document.querySelector(".play-screen-container");
 
 class MyVideo{
     constructor(video,  volume, time, speed){
@@ -18,7 +20,6 @@ class MyVideo{
     
     playPause = () => {
         if(this.video.paused){
-            console.log(this.video.volume)
             this.video.play();
             playPauseBtn.classList.add("active");
         }else{
@@ -32,7 +33,7 @@ class MyPlayer{
         this.myVideo = myVideo;
     }
 
-    displayPlayer(){
+    displayTimeControl(){
         document.querySelector(".time-control").innerHTML = `        
             <span class="time-start">${this.calculateTime(this.myVideo.time)}</span>
             <input class="time-range" type="range" min="0" max="100" value="0" name="time">
@@ -69,14 +70,15 @@ class MyPlayer{
         this.myVideo.video.volume = volume;
 
      }
-    toggleVolume =  () => (volumeSlider.value != "0")? this.setVolume("0", 0): this.setVolume("100", 1);
-    changeVolume = () => {
+    
+     toggleVolume =  () => (volumeSlider.value != "0")? this.setVolume("0", 0): this.setVolume("100", 1);
+    
+     changeVolume = () => {
         this.myVideo.video.volume = volumeSlider.value / 100;
         volumeSlider.value !== 0 && volumeBtn.classList.contains("active")&& volumeBtn.classList.remove("active");
         volumeSlider.value == 0 && !volumeBtn.classList.contains("active")&& volumeBtn.classList.add("active");
         this.updateSliderDisplay(volumeSlider, volumeSlider.value);
-    }    
-
+    }
 }
 
 class Utility{
@@ -87,30 +89,38 @@ class Utility{
         }else{
             container.classList.add("full");
             viewScreenBtn.classList.add("active");
-            document.querySelector(".message-container").style.display = "block";
-            setTimeout(function(){document.querySelector(".message-container").style.display = "none"}, 3000);
+            messageContainer.style.display = "block";
+            setTimeout(function(){messageContainer.style.display = "none"}, 3000);
         }        
     }
+
     static escapeFullScreen = (e) => {
         if(e.key === "Escape"){
         container.classList.remove("full");
         viewScreenBtn.classList.remove("active");
-    } }
+    }}
+
     static toggleSpeedList = () =>  videoSpeedList.style.display =  (videoSpeedList.style.display !== "block") ? "block": "none";
+    
     static closeSpeedList = (e) => videoSpeedList.style.display = (e.target !==videoSpeedBtn )&& "none";
 }
 
 videoPlayer.addEventListener("loadedmetadata",() => {
     const myVideo = new MyVideo(videoPlayer,  0.5, 0, 1);
     const myPlayer = new MyPlayer(myVideo);
-    myPlayer.displayPlayer();    
+    myPlayer.displayTimeControl();    
 
     const timeStart = document.querySelector(".time-start");
     const timeInputRange = document.querySelector(".time-range");
-
-    myVideo.video.addEventListener("click",() =>  myVideo.playPause());    
+    playScreenBtn.style.display = "block";
+    setTimeout(function() {playScreenBtn.style.display = "none";}, 1000);
+    myVideo.video.addEventListener("click",() =>  myVideo.playPause());  
+    playScreenBtn.addEventListener("click", () =>myVideo.playPause());  
     playPauseBtn.addEventListener("click",() => myVideo.playPause());
-    
+    volumeBtn.addEventListener("click", myPlayer.toggleVolume);
+    volumeSlider.addEventListener("input", myPlayer.changeVolume);
+    speeds.forEach(el => el.addEventListener("click",(e) => myPlayer.selectSpeed(e)));
+
     myVideo.video.ontimeupdate = (e) => {
         timeStart.innerHTML =  myPlayer.calculateTime(e.target.currentTime);
         myPlayer.updateSliderPosition(timeInputRange, e.target.currentTime);
@@ -123,17 +133,16 @@ videoPlayer.addEventListener("loadedmetadata",() => {
         myVideo.video.volume = 0.3;  
         volumeBtn.classList.contains("active")&&volumeBtn.classList.remove("active");
         myVideo.video.playbackRate = 1;
-        videoSpeedBtn.innerHTML = "x 1";
+        videoSpeedBtn.innerHTML = "x 1";           
+        speeds.forEach(el=> el.style.backgroundImage = "none");
+        document.querySelector("li:nth-child(4)").style.backgroundImage = "url(./images/icon-check.svg)";
+        playScreenBtn.style.display = "block";
+        setTimeout(function() {playScreenBtn.style.display = "none";}, 1000);
     }
+    
     timeInputRange.onchange = () => myVideo.video.currentTime = timeInputRange.value * myVideo.video.duration/ 100;
-       
-    volumeBtn.addEventListener("click", myPlayer.toggleVolume);
-    volumeSlider.addEventListener("input", myPlayer.changeVolume);
-
-    speeds.forEach(el => el.addEventListener("click",(e) => myPlayer.selectSpeed(e)));
-
 })
-
+    
     viewScreenBtn.addEventListener("click", Utility.toggleFullScreen);
     document.addEventListener("keydown", Utility.escapeFullScreen);  
     videoSpeedBtn.addEventListener("click", Utility.toggleSpeedList);    
